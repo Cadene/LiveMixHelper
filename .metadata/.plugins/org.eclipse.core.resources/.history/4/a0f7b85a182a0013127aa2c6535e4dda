@@ -1,0 +1,53 @@
+package LiveMixHelper;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JMenuItem;
+
+public class UIMenuActionListener implements ActionListener {
+	
+	UILibrary uiLibrary;
+	
+	public UIMenuActionListener(UILibrary uiLibrary) {
+		super();
+		this.uiLibrary = uiLibrary;
+	}
+
+	public void actionPerformed(ActionEvent ev) {
+		JMenuItem test = (JMenuItem) ev.getSource();
+		if (test.getText() == "A Propos")
+			System.out.println("Aide");
+		else if (test.getText() == "Rechercher Track(s)") {
+			System.out.println("LOAD ");
+		}
+		else if (test.getText() == "Ajouter Nouvelle Track") {
+			System.out.println("Ajouter Nouvelle Track ");
+			Track p = new Track();
+			uiLibrary.getLibrary().ajouterTrack(p);
+			uiLibrary.refreshUILibrary();
+
+		}
+		else if (test.getText() == "Rechercher Track(s)") {
+			System.out.println("LOAD ");
+
+		}
+		else if (test.getText() == "Nouveau") {
+			System.out.println("Nouveau ");
+			uiLibrary.setLibrary(new Library());
+		}
+		else if (test.getText() == "Enregistrer Sous") {
+			System.out.println("LOAD ");
+
+		}
+		else if (test.getText() == "Enregistrer") {
+			System.out.println("LOAD ");
+
+		}
+		else if (test.getText() == "Ouvrir") {
+			System.out.println("LOAD ");
+
+		}
+	}
+
+}

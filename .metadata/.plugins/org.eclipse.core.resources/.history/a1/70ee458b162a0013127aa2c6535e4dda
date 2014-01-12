@@ -1,0 +1,37 @@
+package LiveMixHelper;
+
+import java.util.Iterator;
+import java.util.ArrayList;
+
+public class Library {
+	
+	ArrayList <Track> tracks;
+	
+	public void addTrack(Track t) {
+		tracks.add(t);
+	}
+	
+	public void deleteTrack(Track t) {
+		tracks.remove(t);
+	}
+	
+	public Track[] SearchTrackByName(String name) {
+		ArrayList <Track> success = new ArrayList<Track>();
+		for (Iterator it = tracks.iterator() ; it.hasNext();) {
+			Track current = (Track) it.next();
+			if (current.getName().compareTo(name)==0) success.add(current);
+		}
+		Track[] res = new Track[0];
+		return (Track[]) success.toArray(res);
+	}
+	
+	public Track[] listTracks() {
+		Track[] res = new Track[0];
+		return tracks.toArray(res);
+	}
+	
+	public Library() {
+		tracks = new ArrayList<Track>();
+	}
+
+}

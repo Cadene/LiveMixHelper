@@ -1,0 +1,120 @@
+package LiveMixHelper;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+
+import javax.swing.JFrame;
+import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JScrollPane;
+
+import javax.swing.JSplitPane;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+public class UILibrary extends JFrame {
+	
+	Library library;
+	UIMenuActionListener menuListener;
+	
+	JMenuBar menu_barre;
+	JMenu fichier_menu;
+	JMenuItem fichier_menu_ouvrir;
+	
+	JSplitPane splitPane;
+	
+	JList libraryView;
+	UITrack uiTrack;
+	
+	public Library getLibrary()
+	{
+		return this.library;
+	}
+	
+	public void setLibrary(Library library)
+	{
+		this.library = library;
+		refreshUILibrary();
+	}
+	
+	public UILibrary()
+	{
+		super("Ma bibliotheque");
+		menuListener = new UIMenuActionListener(this);
+		WindowListener l = new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				System.exit(0);
+			}
+			public void windowClosed(WindowEvent e)
+			{
+				System.exit(0);
+			}
+		};
+		this.addWindowListener(l);
+		//this.init();
+	}
+	
+	public UILibrary(Library library)
+	{
+		super("Ma bibliotheque");
+		this.library = library;
+		menuListener = new UIMenuActionListener(this);
+		WindowListener l = new WindowAdapter()
+		{
+			public void windowClosing(WindowEvent e)
+			{
+				System.exit(0);
+			}
+			public void windowClosed(WindowEvent e)
+			{
+				System.exit(0);
+			}
+		};
+		this.addWindowListener(l);
+		this.init();
+		this.refreshUILibrary();
+	}
+	
+	protected void init()
+	{
+		//Barre de Menu
+		menu_barre = new JMenuBar();
+		setJMenuBar(menu_barre);
+		
+		//Menu Fichier
+		fichier_menu = new JMenu("Fichier");
+		menu_barre.add(menu_barre);
+		
+		fichier_menu_ouvrir = new JMenuItem("Nouveau");
+		fichier_menu.add(fichier_menu_ouvrir);
+		
+		//Mettre en SplitPane
+		splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
+		getContentPane().add(splitPane);
+		
+		setVisible(true);
+		pack();
+	}
+	
+	public void refreshUILibrary()
+	{
+		// Mettre la JList a gauche
+		libraryView = new JList(this.library.listTracks());
+		libraryView.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e)
+			{
+				System.out.println("Ok");
+				Track t = (Track) libraryView.getSelectedValue();
+				uiTrack.setTrack(t);
+			}
+		});
+	}
+		
+
+	
+}

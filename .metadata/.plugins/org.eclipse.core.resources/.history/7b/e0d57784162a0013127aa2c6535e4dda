@@ -1,0 +1,37 @@
+package LiveMixHelper;
+
+import java.util.Iterator;
+import java.util.ArrayList;
+
+public class Library {
+	
+	ArrayList <Track> tracks;
+	
+	public void addTrack(Track t) {
+		tracks.add(t);
+	}
+	
+	public void deleteTrack(Track t)) {
+		tracks.remove(t);
+	}
+	
+	public Track[] rechercherPersonnesParNom(String nom) {
+		ArrayList <Personne> success = new ArrayList<Personne>();
+		for (Iterator it = personnes.iterator() ; it.hasNext();) {
+			Personne current = (Personne) it.next();
+			if (current.getNom().compareTo(nom)==0) success.add(current);
+		}
+		Personne[] res = new Personne[0];
+		return (Personne[]) success.toArray(res);
+	}
+	
+	public Personne[] listerPersonnes() {
+		Personne[] res = new Personne[0];
+		return personnes.toArray(res);
+	}
+	
+	public Library() {
+		personnes = new ArrayList<Personne>();
+	}
+
+}

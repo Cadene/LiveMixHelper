@@ -1,0 +1,106 @@
+package LiveMixHelper;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class UITrack extends JPanel {
+
+	Track track;
+
+	JTextField nameTF;
+
+	public UITrack() {
+		super();
+		init();
+	}
+
+	public UITrack(Track p) {
+		super();
+		track = p;
+		init();
+	}
+
+	public Track getTrack() {
+		return track;
+	}
+
+	public void setTrack(Track track) {
+		this.track = track;
+		nameTF.setText(track.getName());
+	}
+
+	public void init() {
+		this.setLayout(new GridLayout(0, 2));
+		add(new JLabel("nom"));
+		nomTF = new JTextField("");
+		add(nomTF);
+
+		add(new JLabel("prenom"));
+		prenomTF = new JTextField("");
+		add(prenomTF);
+		add(new JLabel("telephone maison"));
+		telMaisonTF = new JTextField("");
+		add(telMaisonTF);
+		add(new JLabel("telephone portable"));
+		telPortTF = new JTextField("");
+		add(telPortTF);
+		add(new JLabel("telephone bureau"));
+		telBurTF = new JTextField("");
+		add(telBurTF);
+		add(new JLabel("fax"));
+		faxTF = new JTextField("");
+		add(faxTF);
+		add(new JLabel("titre"));
+		titreTF = new JTextField("");
+		add(titreTF);
+		add(new JLabel("société"));
+		socTF = new JTextField("");
+		add(socTF);
+		add(new JLabel("adresse"));
+		addTF = new JTextField("");
+		add(addTF);
+		add(new JLabel("mail"));
+		mailTF = new JTextField("");
+		add(mailTF);
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Track.setPrenom(prenomTF.getText());
+				Track.setNom(nomTF.getText());
+				Track.setTelephoneBureau(telBurTF.getText());
+				Track.setTelephoneMaison(telMaisonTF.getText());
+				Track.setTelephonePortable(telPortTF.getText());
+				Track.setFax(faxTF.getText());
+				Track.setTitre(titreTF.getText());
+				Track.setSociete(socTF.getText());
+				//Track.setAdresse(addTF.getText());
+				Track.setMail(mailTF.getText());
+			}
+		});
+		add(save);
+		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				prenomTF.setText(Track.getPrenom());
+				nomTF.setText(Track.getNom());
+				telBurTF.setText(Track.getTelephoneBureau());
+				telMaisonTF.setText(Track.getTelephoneMaison());
+				telPortTF.setText(Track.getTelephonePortable());
+				faxTF.setText(Track.getFax());
+				titreTF.setText(Track.getTitre());
+				socTF.setText(Track.getSociete());
+				//Adresse
+				mailTF.setText(Track.getMail());
+			}
+		});
+		add(cancel);
+
+	}
+
+}

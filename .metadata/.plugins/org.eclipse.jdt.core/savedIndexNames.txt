@@ -1,0 +1,3 @@
+INDEX VERSION 1.126+/Users/remicadene/Documents/Projets/LiveMixHelper/.metadata/.plugins/org.eclipse.jdt.core
+4151935501.index
+2693894784.index

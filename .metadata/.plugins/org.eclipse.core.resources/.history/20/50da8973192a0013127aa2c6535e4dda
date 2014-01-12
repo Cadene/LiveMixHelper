@@ -1,0 +1,62 @@
+package LiveMixHelper;
+
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class UITrack extends JPanel {
+
+	Track track;
+
+	JTextField nameTF;
+
+	public UITrack() {
+		super();
+		init();
+	}
+
+	public UITrack(Track p) {
+		super();
+		track = p;
+		init();
+	}
+
+	public Track getTrack() {
+		return track;
+	}
+
+	public void setTrack(Track track) {
+		this.track = track;
+		nameTF.setText(track.getName());
+	}
+
+	public void init() {
+		this.setLayout(new GridLayout(0, 2));
+		add(new JLabel("nom"));
+		nameTF = new JTextField("");
+		add(nameTF);
+
+		JButton save = new JButton("Save");
+		save.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				track.setName(nameTF.getText());
+			}
+		});
+		add(save);
+		
+		JButton cancel = new JButton("Cancel");
+		cancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nameTF.setText(track.getName());
+			}
+		});
+		add(cancel);
+
+	}
+
+}
