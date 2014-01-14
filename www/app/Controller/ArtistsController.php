@@ -21,12 +21,33 @@ class ArtistsController extends AppController {
  * @return void
  */
 	public function index() {
-		$this->Artist->recursive = 0;
+		$this->Artist->recursive = 2;
 		$this->paginate = array('Artist' => array(
-			'limit' => 3,
-			'maxLimit' => 3
+			'limit' => 20,
+			'maxLimit' => 30
 		));
-		$this->set('artists', $this->paginate('Artist'));
+		$artists = $this->paginate('Artist');
+		foreach ($artists as $k=>$artist) {
+			$kinds = array();
+			foreach ($artist['Music'] as $music) {
+				foreach ($music['Kind'] as $kind) {
+					if(!in_array($kind['name'],$kinds)) {
+						$kinds[] = $kind['name'];
+						$tmp['id'] = $kind['id'];
+						$tmp['name'] = $kind['name'];
+						$artists_alias[$k][] = $tmp;
+					}
+				}
+				//debug($kinds);
+			}
+		}
+		if(isset($artists_alias)){
+			foreach ($artists_alias as $k=>$v) {
+				$artists[$k]['Kind'] = $v;
+			}
+		}
+		//debug($artists_alias);
+		$this->set('artists', $artists);
 	}
 
 /**
@@ -103,7 +124,7 @@ class ArtistsController extends AppController {
 		if (!$this->Artist->exists()) {
 			throw new NotFoundException(__('Invalid artist'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Artist->delete()) {
 			$this->Session->setFlash(__('The artist has been deleted.'));
 		} else {

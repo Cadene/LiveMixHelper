@@ -1,63 +1,59 @@
 <div class="musics index">
-	<h2><?php echo __('Musics'); ?></h2>
-	<table cellpadding="0" cellspacing="0">
-	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
-			<th><?php echo $this->Paginator->sort('name'); ?></th>
-			<th><?php echo $this->Paginator->sort('label_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('album_id'); ?></th>
-			<th><?php echo $this->Paginator->sort('youtube'); ?></th>
-			<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($musics as $music): ?>
-	<tr>
-		<td><?php echo h($music['Music']['id']); ?>&nbsp;</td>
-		<td><?php echo h($music['Music']['name']); ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($music['Label']['name'], array('controller' => 'labels', 'action' => 'view', $music['Label']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $this->Html->link($music['Album']['name'], array('controller' => 'albums', 'action' => 'view', $music['Album']['id'])); ?>
-		</td>
-		<td>
-			<?php echo '<iframe width="420" height="42" src="//www.youtube.com/embed/'.h($music['Music']['youtube']).'" frameborder="0" allowfullscreen></iframe>'; ?>
-			&nbsp;
-		</td>
-		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $music['Music']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $music['Music']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $music['Music']['id']), null, __('Are you sure you want to delete # %s?', $music['Music']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
-	</table>
-	<p>
-	<?php
-	echo $this->Paginator->counter(array(
-	'format' => __('Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}')
-	));
-	?>	</p>
-	<div class="paging">
-	<?php
-		echo $this->Paginator->prev('< ' . __('previous'), array(), null, array('class' => 'prev disabled'));
-		echo $this->Paginator->numbers(array('separator' => ''));
-		echo $this->Paginator->next(__('next') . ' >', array(), null, array('class' => 'next disabled'));
-	?>
+
+	<div class="page-header">
+		<h2><?php echo __('Musiques :: '); ?><small><a href="/musics/add"><button type="button" class="btn btn-default">Ajouter une musique</button></a></small></h2>
 	</div>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Music'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__('List Labels'), array('controller' => 'labels', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Label'), array('controller' => 'labels', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Albums'), array('controller' => 'albums', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Album'), array('controller' => 'albums', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Artists'), array('controller' => 'artists', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Artist'), array('controller' => 'artists', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Kinds'), array('controller' => 'kinds', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Kind'), array('controller' => 'kinds', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Sets'), array('controller' => 'sets', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Set'), array('controller' => 'sets', 'action' => 'add')); ?> </li>
+
+	<div class="actions">
+		<input type="text" id="name" class="form-control" placeholder="Chercher une musique">
+	</div>
+
+	<hr>
+
+	<?php //debug($musics);?>
+
+	<table class="table table-hover table-bordered table-condensed">
+		<tr>
+				<th><?php echo $this->Paginator->sort('name'); ?></th>
+				<th>Artiste(s)</th>
+				<th>Label</th>
+				<th>Ecoute</th>
+				<th>Genre(s)</th>
+		</tr>
+		<?php foreach ($musics as $music): ?>
+		<tr>
+			<td><?php echo $this->Html->link(__($music['Music']['name']), array('action' => 'view', $music['Music']['id'])); ?></td>
+			<td>
+				<?php foreach ($music['Artist'] as $artist): ?>
+					<?php echo $this->Html->link(__($artist['name']),
+							array('controller' => 'artists', 'action' => 'view', $artist['id'])).' '; ?>
+				<?php endforeach; ?>
+			</td>
+			<td>
+				<?php if (!is_null($music['Label']['id'])): ?>
+					<?php echo $this->Html->link($music['Label']['name'], array('controller' => 'labels', 'action' => 'view', $music['Label']['id'])); ?>
+				<?php endif; ?>
+				<?php if (is_null($music['Label']['id'])): ?>Unsigned<?php endif; ?>
+			</td>
+			<td>
+				<?php echo '<iframe width="420" height="42" src="//www.youtube.com/embed/'.h($music['Music']['youtube']).'" frameborder="0" allowfullscreen></iframe>'; ?>
+				&nbsp;
+			</td>
+			<td>
+				<?php foreach ($music['Kind'] as $kind): ?>
+					<?php echo $this->Html->link(__($kind['name']),
+							array('controller' => 'kinds', 'action' => 'view', $kind['id'])).' '; ?>
+				<?php endforeach; ?>
+			</td>
+		</tr>
+		<?php endforeach; ?>
+	</table>
+
+	<ul class="pagination">
+	<?php
+		echo $this->Paginator->prev('<<', array(), null, array('class' => 'prev disabled'));
+		echo $this->Paginator->numbers(array('separator' => '|'));
+		echo $this->Paginator->next('>>', array(), null, array('class' => 'next disabled'));
+	?>
 	</ul>
 </div>

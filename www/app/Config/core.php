@@ -352,9 +352,9 @@ Configure::write('Routing.prefixes', array('admin'));
 $engine = 'File';
 
 // In development mode, caches should expire quickly.
-$duration = '+999 days';
+$duration = '0 seconds';
 if (Configure::read('debug') > 0) {
-	$duration = '+0 seconds';
+	$duration = '0 seconds';
 }
 
 // Prefix each application on the same server with a different string, to avoid Memcache and APC conflicts.

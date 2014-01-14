@@ -23,28 +23,17 @@ class MusicsController extends AppController {
  */
 	public function index()
 	{
-		$this->Music->recursive = 0;
-		$this->paginate = array('Music' => array(
-			'limit' => 2
-		));
-		$this->set('musics', $this->paginate('Music'));
-		
-		if ($this->RequestHandler->isAjax())
-		{
-   			Configure::write ( 'debug', 0 );
-   			$this->autoRender=false;
-			$musics=$this->Music->find('all',array(
-				'conditions'=>array('Music.name LIKE'=>'%'.$_GET['term'].'%')
-			));
-			foreach($musics as $music){
-				$response[]['value']=$music['music']['name'];
-			}
-			echo json_encode($response);
-		}else{
-			if (!empty($this->data)) {
-				$this->set('names',$this->paginate(array('Music.name LIKE'=>'%'.$this->data['Music']['name'].'%')));
-			}
-		}
+		$this->Music->recursive = 1;
+		$this->paginate = array(
+			'Music' => array(
+				'limit' => 2,
+				'contain' => array(
+					'KindsMusic' => array('Kind')
+				)
+			)
+		);
+		$musics = $this->paginate('Music');
+		$this->set('musics', $musics);
 	}
 
 /**

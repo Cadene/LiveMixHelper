@@ -1,61 +1,59 @@
 <div class="artists view">
-<h2><?php echo __('Artist'); ?></h2>
-	<dl>
-		<dt><?php echo __('Id'); ?></dt>
-		<dd>
-			<?php echo h($artist['Artist']['id']); ?>
-			&nbsp;
-		</dd>
-		<dt><?php echo __('Name'); ?></dt>
-		<dd>
-			<?php echo h($artist['Artist']['name']); ?>
-			&nbsp;
-		</dd>
-	</dl>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('Edit Artist'), array('action' => 'edit', $artist['Artist']['id'])); ?> </li>
-		<li><?php echo $this->Form->postLink(__('Delete Artist'), array('action' => 'delete', $artist['Artist']['id']), null, __('Are you sure you want to delete # %s?', $artist['Artist']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(__('List Artists'), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Artist'), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__('List Musics'), array('controller' => 'musics', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Music'), array('controller' => 'musics', 'action' => 'add')); ?> </li>
-	</ul>
-</div>
-<div class="related">
-	<h3><?php echo __('Related Musics'); ?></h3>
-	<?php if (!empty($artist['Music'])): ?>
-	<table cellpadding = "0" cellspacing = "0">
-	<tr>
-		<th><?php echo __('Id'); ?></th>
-		<th><?php echo __('Name'); ?></th>
-		<th><?php echo __('Label Id'); ?></th>
-		<th><?php echo __('Album Id'); ?></th>
-		<th><?php echo __('Youtube'); ?></th>
-		<th class="actions"><?php echo __('Actions'); ?></th>
-	</tr>
-	<?php foreach ($artist['Music'] as $music): ?>
-		<tr>
-			<td><?php echo $music['id']; ?></td>
-			<td><?php echo $music['name']; ?></td>
-			<td><?php echo $music['label_id']; ?></td>
-			<td><?php echo $music['album_id']; ?></td>
-			<td><?php echo $music['youtube']; ?></td>
-			<td class="actions">
-				<?php echo $this->Html->link(__('View'), array('controller' => 'musics', 'action' => 'view', $music['id'])); ?>
-				<?php echo $this->Html->link(__('Edit'), array('controller' => 'musics', 'action' => 'edit', $music['id'])); ?>
-				<?php echo $this->Form->postLink(__('Delete'), array('controller' => 'musics', 'action' => 'delete', $music['id']), null, __('Are you sure you want to delete # %s?', $music['id'])); ?>
-			</td>
-		</tr>
-	<?php endforeach; ?>
-	</table>
-<?php endif; ?>
 
-	<div class="actions">
-		<ul>
-			<li><?php echo $this->Html->link(__('New Music'), array('controller' => 'musics', 'action' => 'add')); ?> </li>
-		</ul>
+	<div class="page-header">
+		<h2><?php echo h($artist['Artist']['name']); ?></h2>
 	</div>
+
+	<?php echo debug($artist);?>
+
+	<div class="row">
+		<div class="col-md-2">
+  			<div class="actions">
+  				<div>
+  					<a href="/musics/add/artist:<?php echo $artist['Artist']['id'];?>">
+  						<button type="button" class="btn btn-default">Ajouter musique</button>
+  					</a>
+  				</div>
+  				<div>
+  					<a href="/artists/edit/<?php echo $artist['Artist']['id'];?>">
+  						<button type="button" class="btn btn-default">Editer artiste</button>
+  					</a>
+  				</div>
+  				<div>
+  					<a href="/artists/delete/<?php echo $artist['Artist']['id'];?>">
+  						<button type="button" class="btn btn-default"
+  								onclick="if (confirm(&quot;Are you sure you want to delete # 8?&quot;)) { document.post.submit(); } event.returnValue = false; return false;">Supprimer artiste</button>
+  					</a>
+  				</div>
+			</div>
+		</div>
+  		<div class="col-md-10">
+  			<div class="related">
+				<h3><?php echo __('Related Musics'); ?></h3>
+				<?php if (!empty($artist['Music'])): ?>
+				<table class="table table-hover table-bordered table-condensed">
+				<tr>
+					<th><?php echo __('Name'); ?></th>
+					<th><?php echo __('Label Id'); ?></th>
+					<th><?php echo __('Album Id'); ?></th>
+					<th><?php echo __('Youtube'); ?></th>
+				</tr>
+				<?php foreach ($artist['Music'] as $music): ?>
+					<tr>
+						<td><?php echo $this->Html->link(__($music['name']), array('controller' => 'musics', 'action' => 'view', $music['id'])); ?></td>
+						<td><?php echo $music['label_id']; ?></td>
+						<td><?php echo $music['album_id']; ?></td>
+						<td><?php echo '<iframe width="420" height="42" src="//www.youtube.com/embed/'.$music['youtube'].'" frameborder="0" allowfullscreen></iframe>'; ?></td>
+					</tr>
+				<?php endforeach; ?>
+				</table>
+				<?php endif; ?>
+				<?php if (empty($artist['Music'])): ?>
+				<div>L'artiste n'a pas encore de musique</div>
+				<?php endif; ?>
+			</div>
+		</div>
+  		
+	</div>
+	
 </div>
