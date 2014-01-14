@@ -130,7 +130,7 @@ class UsersController extends AppController {
 					$this->Auth->login($user);
 					$this->User->id = $this->Auth->user('id');
 					$this->User->saveField('lastLogin',date('Y-m-d H:i:s'));
-					$this->Session->setFlash('Vous êtes maintenant connecté', 'notif', array('type'=>'success'));
+					$this->Session->setFlash('Connecté avec succès.','notif',array('type'=>'success'));
 					return $this->redirect($this->Auth->redirectUrl());
 				} else {
 					$this->Session->setFlash(

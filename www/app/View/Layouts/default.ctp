@@ -56,10 +56,10 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 
         <div class="navbar-collapse collapse">
         	<?php if (AuthComponent::user('id')): ?>
-    			<?php echo $this->element('navbar'); ?>
-    		<?php endif; ?>
+    			 <?php echo $this->element('navbar'); ?>
+    		  <?php endif; ?>
 
-			<?php if (!AuthComponent::user('id')): ?>
+			     <?php if (!AuthComponent::user('id')): ?>
 	          <?php echo $this->Form->create('User', array(
 	          	'class'=>"navbar-form navbar-right",
 	          	'url' => array('controller' => 'users','action'=>'login')
@@ -78,7 +78,7 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
 	            </div>
 	            <button type="submit" class="btn btn-success">Log in</button>
 	          </form>
-    		<?php endif; ?>
+    		  <?php endif; ?>
         </div><!--/.navbar-collapse -->
       </div>
     </div>

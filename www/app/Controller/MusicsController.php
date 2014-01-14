@@ -59,7 +59,8 @@ class MusicsController extends AppController {
 			throw new NotFoundException(__('Invalid music'));
 		}
 		$options = array('conditions' => array('Music.' . $this->Music->primaryKey => $id));
-		$this->set('music', $this->Music->find('first', $options));
+		$musics = $this->Music->find('first', $options);
+		$this->set('music', $musics);
 	}
 
 /**
@@ -70,6 +71,7 @@ class MusicsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Music->create();
+			debug($this->request->data);
 			if ($this->Music->save($this->request->data)) {
 				$this->Session->setFlash(__('The music has been saved.'));
 				return $this->redirect(array('action' => 'index'));

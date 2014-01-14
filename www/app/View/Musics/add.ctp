@@ -9,7 +9,7 @@
 		echo $this->Form->input('youtube');
 		echo $this->Form->input('Artist');
 		echo $this->Form->input('Kind');
-		echo $this->Form->input('Set');
+		echo $this->Form->input('music_file', array('type' => 'file'));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit')); ?>

@@ -19,7 +19,10 @@
 		<td>
 			<?php echo $this->Html->link($music['Album']['name'], array('controller' => 'albums', 'action' => 'view', $music['Album']['id'])); ?>
 		</td>
-		<td><?php echo h($music['Music']['youtube']); ?>&nbsp;</td>
+		<td>
+			<?php echo '<iframe width="420" height="42" src="//www.youtube.com/embed/'.h($music['Music']['youtube']).'" frameborder="0" allowfullscreen></iframe>'; ?>
+			&nbsp;
+		</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View'), array('action' => 'view', $music['Music']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $music['Music']['id'])); ?>

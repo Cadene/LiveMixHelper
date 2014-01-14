@@ -23,10 +23,10 @@ class ArtistsController extends AppController {
 	public function index() {
 		$this->Artist->recursive = 0;
 		$this->paginate = array('Artist' => array(
-			'maxLimit' => 2
+			'limit' => 3,
+			'maxLimit' => 3
 		));
 		$this->set('artists', $this->paginate('Artist'));
-		//$this->set('artists', $this->Paginator->paginate());
 	}
 
 /**
@@ -52,11 +52,15 @@ class ArtistsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Artist->create();
-			if ($this->Artist->save($this->request->data)) {
-				$this->Session->setFlash('Artiste ajouté avec succès.','notif',array('type'=>'success'));
-				return $this->redirect(array('action' => 'index'));
-			} else {
+			try  {
+				if ($this->Artist->save($this->request->data)) {
+					$this->Session->setFlash('Artiste ajouté avec succès.','notif',array('type'=>'success'));
+					return $this->redirect(array('action' => 'index'));
+				}
+			}
+			catch (PDOException $e) {
 				$this->Session->setFlash('L\'ajout a échoué.','notif',array('type'=>'danger'));
+				return $this->redirect(array('action' => 'index'));
 			}
 		}
 	}

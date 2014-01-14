@@ -23,7 +23,7 @@
 		</dd>
 		<dt><?php echo __('Youtube'); ?></dt>
 		<dd>
-			<?php echo h($music['Music']['youtube']); ?>
+			<?php echo '<iframe width="420" height="315" src="//www.youtube.com/embed/'.h($music['Music']['youtube']).'" frameborder="0" allowfullscreen></iframe>'; ?>
 			&nbsp;
 		</dd>
 	</dl>

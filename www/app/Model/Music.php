@@ -19,6 +19,19 @@ class Music extends AppModel {
 	public $useTable = 'Musics';
 
 /**
+ * Use behaviour
+ *
+ *
+ */
+	public $actsAs = array(
+		'Upload.Upload' => array(
+			'fields' => array(
+				'music' => 'msuic/posts/:id1000/:id'
+			)
+		)
+	);
+
+/**
  * Display field
  *
  * @var string
@@ -71,6 +84,9 @@ class Music extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
+		'music_file' => array(
+			'rule' => array('fileExtension', array('mp3','aac','wav'))
+		)
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
@@ -143,5 +159,23 @@ class Music extends AppModel {
 			'finderQuery' => '',
 		)
 	);
+
+	public function beforeSave($options=array()) {
+		if(!empty($this->data['Music']['youtube'])){
+			$pattern = "/v=([a-zA-Z0-9]*)/";//\^[&|#]/";
+			$subject = $this->data['Music']['youtube'];
+			if(preg_match($pattern,$subject,$matches)){
+				$this->data['Music']['youtube'] = $matches[1];
+			}else{
+				$youtube = explode('/',$this->data['Music']['youtube']);
+				$this->data['Music']['youtube'] = $youtube[count($youtube)-1];
+			}
+		}
+		return true;
+	}
+
+	public function afterFind($results, $primary = false){
+		return $results;
+	}
 
 }
