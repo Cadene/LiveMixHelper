@@ -162,7 +162,7 @@ class Music extends AppModel {
 
 	public function beforeSave($options=array()) {
 		if(!empty($this->data['Music']['youtube'])){
-			$pattern = "/v=([a-zA-Z0-9]*)/";//\^[&|#]/";
+			$pattern = "/v=([a-zA-Z0-9_]*)/";//\^[&|#]/";
 			$subject = $this->data['Music']['youtube'];
 			if(preg_match($pattern,$subject,$matches)){
 				$this->data['Music']['youtube'] = $matches[1];
