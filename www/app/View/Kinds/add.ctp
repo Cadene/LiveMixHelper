@@ -1,20 +1,14 @@
-<div class="kinds form">
-<?php echo $this->Form->create('Kind'); ?>
-	<fieldset>
-		<legend><?php echo __('Add Kind'); ?></legend>
-	<?php
-		echo $this->Form->input('name');
-		echo $this->Form->input('Music');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit')); ?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+<?php echo $this->element('page-header',array('title'=>'Ajouter un genre')); ?>
 
-		<li><?php echo $this->Html->link(__('List Kinds'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__('List Musics'), array('controller' => 'musics', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__('New Music'), array('controller' => 'musics', 'action' => 'add')); ?> </li>
-	</ul>
+<div class="kinds form">
+	<?php echo $this->Form->create('Kind'); ?>
+		<fieldset>
+			<div class="form-group">
+				<?php echo $this->Form->input('name', array(
+					'label'=>'Name *','class'=>'form-control'
+				));?>
+			</div>
+		</fieldset>
+		<center><button type="submit" class="btn btn-default">Ajouter</button></center>
+</form>
 </div>

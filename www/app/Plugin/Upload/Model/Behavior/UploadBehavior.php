@@ -30,9 +30,10 @@ class UploadBehavior extends ModelBehavior{
     public function afterSave(Model $model, $created, $options = array()){
         $data = $model->data;
         foreach($this->options[$model->alias]['fields'] as $field => $path){
+           debug($data[$model->alias][$field . '_file']);
            if(
                 isset($data[$model->alias][$field . '_file']) &&
-                !empty($data[$model->alias][$field . '_file']['name']) &&
+                !empty($data[$model->alias][$field . '_file']) &&
                 (
                     !$model->whitelist ||
                     empty($model->whitelist) ||
@@ -40,13 +41,13 @@ class UploadBehavior extends ModelBehavior{
                 )
             ){
                 $file = $data[$model->alias][$field . '_file'];
-                $extension = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+                $extension = strtolower(pathinfo($file, PATHINFO_EXTENSION));
                 $path = $this->getUploadPath($model, $path, $extension);
                 $dirname = dirname($path);
                 if(!file_exists(WWW_ROOT . $dirname)){
                     mkdir(WWW_ROOT . $dirname, 0777, true);
                 }
-                $model->deleteOldUpload($field);
+                //$model->deleteOldUpload($field);
                 $model->move_uploaded_file(
                     $file['tmp_name'],
                     WWW_ROOT . $path
@@ -68,6 +69,8 @@ class UploadBehavior extends ModelBehavior{
      * Alias for the move_uploaded_file function, so it can be mocked for testing purpose
     */
     public function move_uploaded_file(Model $model, $source, $destination){
+        debug($source);
+        debug($destination);
         move_uploaded_file($source, $destination);
     }
 
@@ -102,6 +105,7 @@ class UploadBehavior extends ModelBehavior{
     }
 
     public function deleteOldUpload(Model $model, $field){
+        debug($field);
         $file = $model->field($field);
         if(empty($file)){
             return true;

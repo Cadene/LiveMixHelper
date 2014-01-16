@@ -119,10 +119,10 @@ $cakeDescription = __d('cake_dev', 'CakePHP: the rapid development php framework
     <hr>
 
 	
-	<footer>
-        <p class="pull-right"><a href="#">Back to top</a></p>
-    	<p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
-    </footer>
+	<div class="footer">
+    <p class="pull-right"><a href="#">Back to top</a></p>
+    <p>&copy; 2014 Aztechno, Inc. &middot; Powered by <a href="http://soundcloud.com/tamazy3">Tamazy</a><!-- &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a>--></p>
+  </div>
 	
 	<?php echo $this->element('sql_dump'); ?>
   	<?php debug($this->Session->read()); ?>

@@ -63,6 +63,9 @@ class ArtistsController extends AppController {
 		}
 		$options = array('conditions' => array('Artist.' . $this->Artist->primaryKey => $id));
 		$this->set('artist', $this->Artist->find('first', $options));
+		$musics = $this->requestAction('/musics/getMusics/'.$id);
+		//debug($musics);
+		$this->set('musics', $musics);
 	}
 
 /**
@@ -80,7 +83,7 @@ class ArtistsController extends AppController {
 				}
 			}
 			catch (PDOException $e) {
-				$this->Session->setFlash('L\'ajout a échoué.','notif',array('type'=>'danger'));
+				$this->Session->setFlash('L\'ajout a échoué.','notif');
 				return $this->redirect(array('action' => 'index'));
 			}
 		}
@@ -99,7 +102,7 @@ class ArtistsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Artist->save($this->request->data)) {
-				$this->Session->setFlash(__('The artist has been saved.'));
+				$this->Session->setFlash(__('The artist has been saved.'),'notif',array('type'=>'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The artist could not be saved. Please, try again.'));
@@ -126,7 +129,7 @@ class ArtistsController extends AppController {
 		}
 		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Artist->delete()) {
-			$this->Session->setFlash(__('The artist has been deleted.'));
+			$this->Session->setFlash(__('The artist has been deleted.'),'notif',array('type'=>'success'));
 		} else {
 			$this->Session->setFlash(__('The artist could not be deleted. Please, try again.'));
 		}

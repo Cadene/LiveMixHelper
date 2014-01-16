@@ -26,7 +26,7 @@
       )
     );?>
   </li>
-  <li <?php if($this->params['controller']=='labels') echo 'class="active"'; ?>>
+  <!--<li <?php if($this->params['controller']=='labels') echo 'class="active"'; ?>>
     <?php echo $this->Html->link(
       'Labels',
       array(
@@ -34,7 +34,7 @@
         'action' => 'index'
       )
     );?>
-  </li>
+  </li>-->
   <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mon Compte<b class="caret"></b></a>
     <ul class="dropdown-menu">

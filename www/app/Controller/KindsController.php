@@ -38,6 +38,9 @@ class KindsController extends AppController {
 		}
 		$options = array('conditions' => array('Kind.' . $this->Kind->primaryKey => $id));
 		$this->set('kind', $this->Kind->find('first', $options));
+		$musics = $this->requestAction('/musics/getMusicsByKind/'.$id);
+		//debug($musics);
+		$this->set('musics', $musics);
 	}
 
 /**
@@ -97,7 +100,7 @@ class KindsController extends AppController {
 		if (!$this->Kind->exists()) {
 			throw new NotFoundException(__('Invalid kind'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Kind->delete()) {
 			$this->Session->setFlash(__('The kind has been deleted.'));
 		} else {

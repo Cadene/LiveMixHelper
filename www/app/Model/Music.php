@@ -23,13 +23,13 @@ class Music extends AppModel {
  *
  *
  */
-	public $actsAs = array(
+	/*public $actsAs = array(
 		'Upload.Upload' => array(
 			'fields' => array(
-				'music' => 'msuic/posts/:id1000/:id'
+				'music' => 'files/:id'
 			)
 		)
-	);
+	);*/
 
 /**
  * Display field
@@ -83,10 +83,10 @@ class Music extends AppModel {
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
-		),
+		)/*,
 		'music_file' => array(
-			'rule' => array('fileExtension', array('mp3','aac','wav'))
-		)
+			'rule' => array('fileExtension', array('mp3','aac','jpg'))
+		)*/
 	);
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

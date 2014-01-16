@@ -112,7 +112,7 @@ class UsersController extends AppController {
 		{
 			if($this->request->data['User']['username']=='Aztechno'){
 				$this->Auth->login(array('id'=>1,'name'=>'Aztechno'));
-				$this->Session->setFlash('Vous êtes maintenant connecté', 'notif');
+				$this->Session->setFlash('Vous êtes maintenant connecté', 'notif',array('type'=>'success'));
 				return $this->redirect($this->Auth->redirect());
 			}
 

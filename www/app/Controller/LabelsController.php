@@ -93,7 +93,7 @@ class LabelsController extends AppController {
 		if (!$this->Label->exists()) {
 			throw new NotFoundException(__('Invalid label'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Label->delete()) {
 			$this->Session->setFlash(__('The label has been deleted.'));
 		} else {

@@ -1,8 +1,6 @@
 <div class="artists index">
 
-	<div class="page-header">
-		<h2><?php echo __('Artistes :: '); ?><small><a href="/artists/add"><button type="button" class="btn btn-default">Ajouter un artiste</button></a></small></h2>
-	</div>
+	<?php echo $this->element('page-header',array('title'=>'Artistes','add'=>'Ajouter un artiste')); ?>
 
 	<?php //debug($artists);?>
 
@@ -23,10 +21,12 @@
 			<?php echo $this->Html->link(__($artist['Artist']['name']), array('action' => 'view', $artist['Artist']['id'])); ?>
 		</td>
 		<td>
-			<?php foreach ($artist['Kind'] as $kind): ?>
-				<?php echo $this->Html->link(__($kind['name']),
-						array('controller' => 'kinds', 'action' => 'view', $kind['id'])).' '; ?>
-			<?php endforeach; ?>
+			<?php if(isset($artist['Kind'])): ?>
+				<?php foreach ($artist['Kind'] as $kind): ?>
+					<?php echo $this->Html->link(__($kind['name']),
+							array('controller' => 'kinds', 'action' => 'view', $kind['id'])).' '; ?>
+				<?php endforeach; ?>
+			<?php endif; ?>
 		</td>
 	</tr>
 	<?php endforeach; ?>

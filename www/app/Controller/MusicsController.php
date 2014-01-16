@@ -26,7 +26,8 @@ class MusicsController extends AppController {
 		$this->Music->recursive = 1;
 		$this->paginate = array(
 			'Music' => array(
-				'limit' => 2,
+				'limit' => 10,
+				'maxLimit' => 50,
 				'contain' => array(
 					'KindsMusic' => array('Kind')
 				)
@@ -34,6 +35,38 @@ class MusicsController extends AppController {
 		);
 		$musics = $this->paginate('Music');
 		$this->set('musics', $musics);
+	}
+
+	public function getMusics($idArtist){
+		$this->Music->recursive = 1;
+		$this->Music->bindModel(array('hasOne'=>array('ArtistsMusic')),false);
+		$this->paginate = array(
+			'Music' => array(
+				'limit' => 10,
+				'maxLimit' => 50,
+				'contain' => array(
+					'ArtistsMusic' => array('Artist')
+				),
+				'conditions' => array('ArtistsMusic.artist_id' => $idArtist)
+			)
+		);
+		return $this->paginate('Music');
+	}
+
+	public function getMusicsByKind($idKind){
+		$this->Music->recursive = 1;
+		$this->Music->bindModel(array('hasOne'=>array('KindsMusic')),false);
+		$this->paginate = array(
+			'Music' => array(
+				'limit' => 10,
+				'maxLimit' => 50,
+				'contain' => array(
+					'KindsMusic' => array('Kind')
+				),
+				'conditions' => array('KindsMusic.kind_id' => $idKind)
+			)
+		);
+		return $this->paginate('Music');
 	}
 
 /**
@@ -60,9 +93,9 @@ class MusicsController extends AppController {
 	public function add() {
 		if ($this->request->is('post')) {
 			$this->Music->create();
-			debug($this->request->data);
+			//debug($this->request->data);
 			if ($this->Music->save($this->request->data)) {
-				$this->Session->setFlash(__('The music has been saved.'));
+				$this->Session->setFlash(__('The music has been saved.'),'notif',array('type'=>'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The music could not be saved. Please, try again.'));
@@ -89,7 +122,7 @@ class MusicsController extends AppController {
 		}
 		if ($this->request->is(array('post', 'put'))) {
 			if ($this->Music->save($this->request->data)) {
-				$this->Session->setFlash(__('The music has been saved.'));
+				$this->Session->setFlash(__('The music has been saved.'),'notif',array('type'=>'success'));
 				return $this->redirect(array('action' => 'index'));
 			} else {
 				$this->Session->setFlash(__('The music could not be saved. Please, try again.'));
@@ -118,9 +151,9 @@ class MusicsController extends AppController {
 		if (!$this->Music->exists()) {
 			throw new NotFoundException(__('Invalid music'));
 		}
-		$this->request->onlyAllow('post', 'delete');
+		//$this->request->onlyAllow('post', 'delete');
 		if ($this->Music->delete()) {
-			$this->Session->setFlash(__('The music has been deleted.'));
+			$this->Session->setFlash('The music has been deleted.','notif',array('type'=>'success'));
 		} else {
 			$this->Session->setFlash(__('The music could not be deleted. Please, try again.'));
 		}
